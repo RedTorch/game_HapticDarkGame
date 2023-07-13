@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using TMPro;
 
 public class DangerDetectionController : MonoBehaviour
@@ -9,6 +10,8 @@ public class DangerDetectionController : MonoBehaviour
     [SerializeField] float hearingRadius = 5f;
     [SerializeField] float singleSourceIntensity = 0.5f;
     [SerializeField] private TMP_Text debugText;
+    [SerializeField] private GameObject gradientLeft;
+    [SerializeField] private GameObject gradientRight;
 
     private bool isActive = true;
     private Gamepad gamepad;
@@ -43,6 +46,8 @@ public class DangerDetectionController : MonoBehaviour
                 intensityRight += rightBalance * singleSourceIntensity * oscillStrength;
             }
         }
+        gradientLeft.GetComponent<CanvasGroup>().alpha = intensityLeft * 10f;
+        gradientRight.GetComponent<CanvasGroup>().alpha = intensityRight * 10f;
         if(debugText)
         {
             debugText.text = (intensityLeft + ", " + intensityRight);
